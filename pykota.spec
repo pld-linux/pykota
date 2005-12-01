@@ -53,8 +53,29 @@ rm -rf $RPM_BUILD_ROOT
 %{py_sitescriptdir}/%{name}/accounters/*.py[co]
 %dir %{_datadir}/%{name}
 %attr(755,root,root) %{_datadir}/%{name}/*.sh
+%attr(755,root,root) %{_datadir}/%{name}/*.php
+%attr(755,root,root) %{_datadir}/%{name}/*.py
+%attr(755,root,root) %{_datadir}/%{name}/cupspykota
 %{_datadir}/%{name}/*.pjl
 %{_datadir}/%{name}/*.pl
 %{_datadir}/%{name}/*.ps
 %{_datadir}/%{name}/logos
-# %{_datadir}/%{name}/ldap
+%dir %{_datadir}/%{name}/cgi-bin
+%attr(755,root,root) %{_datadir}/%{name}/cgi-bin/*.cgi
+%{_datadir}/%{name}/ldap
+%{_datadir}/%{name}/postgresql
+
+%{_mandir}/man?/*
+%lang(el_GR) %{_mandir}/el_GR/man?/*
+%lang(de) %{_mandir}/de/man?/*
+%lang(es) %{_mandir}/es/man?/*
+%lang(fr) %{_mandir}/fr/man?/*
+%lang(it) %{_mandir}/it/man?/*
+%lang(nb_NO) %{_mandir}/nb_NO/man?/*
+%lang(pl) %{_mandir}/pl/man?/*
+%lang(pt) %{_mandir}/pt/man?/*
+%lang(pt_BR) %{_mandir}/pt_BR/man?/*
+%lang(sv_SE) %{_mandir}/sv_SE/man?/*
+%lang(th) %{_mandir}/th/man?/*
+%lang(tr) %{_mandir}/tr/man?/*
+%lang(zh_TW) %{_mandir}/zh_TW/man?/*
