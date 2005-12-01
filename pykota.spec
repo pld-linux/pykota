@@ -33,6 +33,10 @@ rm -rf $RPM_BUILD_ROOT
 python setup.py install \
 	--root=$RPM_BUILD_ROOT --optimize=2
 
+mv -f $RPM_BUILD_ROOT%{_mandir}/{el_GR,el}
+mv -f $RPM_BUILD_ROOT%{_mandir}/{nb_NO,nb}
+mv -f $RPM_BUILD_ROOT%{_mandir}/{sv_SE,sv}
+
 %find_lang %{name}
 
 %clean
@@ -66,16 +70,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}/postgresql
 
 %{_mandir}/man?/*
-%lang(el_GR) %{_mandir}/el_GR/man?/*
+%lang(el) %{_mandir}/el/man?/*
 %lang(de) %{_mandir}/de/man?/*
 %lang(es) %{_mandir}/es/man?/*
 %lang(fr) %{_mandir}/fr/man?/*
 %lang(it) %{_mandir}/it/man?/*
-%lang(nb_NO) %{_mandir}/nb_NO/man?/*
+%lang(nb) %{_mandir}/nb_NO/man?/*
 %lang(pl) %{_mandir}/pl/man?/*
 %lang(pt) %{_mandir}/pt/man?/*
 %lang(pt_BR) %{_mandir}/pt_BR/man?/*
-%lang(sv_SE) %{_mandir}/sv_SE/man?/*
+%lang(sv) %{_mandir}/sv/man?/*
 %lang(th) %{_mandir}/th/man?/*
 %lang(tr) %{_mandir}/tr/man?/*
 %lang(zh_TW) %{_mandir}/zh_TW/man?/*
