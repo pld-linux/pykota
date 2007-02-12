@@ -2,7 +2,7 @@
 %define	svn_tag	1904
 Name:		pykota
 Summary:	Print Quota and Accounting Software Solution
-Summary(pl):	Narzêdzie do limitowania i rozliczania wydruków
+Summary(pl.UTF-8):   NarzÄ™dzie do limitowania i rozliczania wydrukÃ³w
 Version:	0.%{svn_tag}
 Release:	0.1
 License:	GPL v 2
@@ -18,8 +18,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Print Quota and Accounting Software Solution.
 
-%description -l pl
-Narzêdzie do limitowania i rozliczania wydruków.
+%description -l pl.UTF-8
+NarzÄ™dzie do limitowania i rozliczania wydrukÃ³w.
 
 %prep
 %setup -q -n %{name}
