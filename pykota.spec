@@ -9,7 +9,7 @@ Group:		Applications/Printing
 # NOTE: from svn:
 # svn co svn://svn.librelogiciel.com/pykota/tags/1.26/
 Source0:	%{name}-%{version}.tar.bz2
-# Source0-md5:	0e00c7850342de4dea0cd7d000772e2a
+# Source0-md5:	6e4b3232420592695388cbb27511e668
 URL:		http://www.pykota.com/
 # Requires: from http://www.librelogiciel.com/software/PyKota/Download/action_Download
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
