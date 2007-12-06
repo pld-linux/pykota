@@ -1,17 +1,16 @@
 # TODO: files, initscript, make it working
-%define	svn_tag	1904
 Name:		pykota
 Summary:	Print Quota and Accounting Software Solution
 Summary(pl.UTF-8):	Narzędzie do limitowania i rozliczania wydruków
-Version:	0.%{svn_tag}
+Version:	1.26
 Release:	0.1
-License:	GPL v 2
+License:	GPLv2
 Group:		Applications/Printing
 # NOTE: from svn:
-# svn co svn://svn.librelogiciel.com/pykota/trunk pykota
-Source0:	%{name}-%{svn_tag}.tar.bz2
+# svn co svn://svn.librelogiciel.com/pykota/tags/1.26/
+Source0:	%{name}-%{version}.tar.bz2
 # Source0-md5:	0e00c7850342de4dea0cd7d000772e2a
-URL:		http://www.librelogiciel.com/software/PyKota/action_Presentation
+URL:		http://www.pykota.com/
 # Requires: from http://www.librelogiciel.com/software/PyKota/Download/action_Download
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -22,9 +21,11 @@ Print Quota and Accounting Software Solution.
 Narzędzie do limitowania i rozliczania wydruków.
 
 %prep
-%setup -q -n %{name}
+%setup -q
 
 %build
+python checkdeps.py
+
 python setup.py build
 
 %install
