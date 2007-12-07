@@ -11,12 +11,17 @@ Group:		Applications/Printing
 Source0:	%{name}-%{version}.tar.bz2
 # Source0-md5:	6e4b3232420592695388cbb27511e668
 URL:		http://www.pykota.com/
-# Requires: from http://www.librelogiciel.com/software/PyKota/Download/action_Download
+BuildRequires:	ghostscript
+BuildRequires:	net-snmp-utils
 BuildRequires:	python-ldap
 BuildRequires:	python-mx-DateTime
+BuildRequires:	python-mx-DateTime-devel
 BuildRequires:	python-MySQLdb
+BuildRequires:	python-PIL
+BuildRequires:	python-PIL-devel
 BuildRequires:	python-psyco
 BuildRequires:	python-PyGreSQL
+BuildRequires:	python-pyosd
 BuildRequires:	python-PyPAM
 BuildRequires:	python-pysnmp
 BuildRequires:	python-ReportLab
