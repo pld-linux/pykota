@@ -16,16 +16,16 @@ BuildRequires:	net-snmp-utils
 BuildRequires:	python-ldap
 BuildRequires:	python-mx-DateTime
 BuildRequires:	python-mx-DateTime-devel
-BuildRequires:	python-MySQLdb
+BuildRequires:	python-MySQLdb >= 1.2
 BuildRequires:	python-PIL
 BuildRequires:	python-PIL-devel
 BuildRequires:	python-psyco
 BuildRequires:	python-PyGreSQL
 BuildRequires:	python-pyosd
 BuildRequires:	python-PyPAM
-BuildRequires:	python-pysnmp
+BuildRequires:	python-pysnmp >= 3.4.2
 BuildRequires:	python-ReportLab
-BuildRequires:	python-sqlite
+BuildRequires:	python-sqlite >= 2.0.5
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
