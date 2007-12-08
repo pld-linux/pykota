@@ -13,27 +13,26 @@ Source0:	%{name}-%{version}.tar.bz2
 URL:		http://www.pykota.com/
 BuildRequires:	docbook-utils
 BuildRequires:	docbook-dtd41-sgml
-BuildRequires:	ghostscript
-BuildRequires:	net-snmp-utils
-BuildRequires:	python-chardet
-BuildRequires:	python-pkipplib
-BuildRequires:	python-jaxml
-BuildRequires:	python-ldap
-BuildRequires:	python-mx-DateTime
-BuildRequires:	python-mx-DateTime-devel
-BuildRequires:	python-MySQLdb >= 1.2
-BuildRequires:	python-PIL
-BuildRequires:	python-PIL-devel
-BuildRequires:	python-pkpgcounter
+Requires:	ghostscript
+Requires:	python-chardet
+Requires:	python-pkipplib
+Requires:	python-jaxml
+Requires:	python-mx-DateTime
+Requires:	python-PIL
+Requires:	python-pkpgcounter
 %ifarch %{ix86}
-BuildRequires:	python-psyco
+Requires:	python-psyco
 %endif
-BuildRequires:	python-PyGreSQL
-BuildRequires:	python-pyosd
-BuildRequires:	python-PyPAM
-BuildRequires:	python-pysnmp >= 3.4.2
-BuildRequires:	python-ReportLab
-BuildRequires:	python-sqlite >= 2.0.5
+Requires:	python-pyosd
+Requires:	python-PyPAM
+Requires:	python-pysnmp >= 3.4.2
+Requires:	python-ReportLab
+Suggests:	net-snmp-utils
+Suggests:	netatalk
+Suggests:	python-ldap
+Suggests:	python-MySQLdb >= 1.2
+Suggests:	python-PyGreSQL
+Suggests:	python-sqlite >= 2.0.5
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -55,8 +54,6 @@ mv -f man/{sv_SE,sv}
 find -name .svn | xargs rm -rf
 
 %build
-python checkdeps.py
-
 python setup.py build
 
 cd docs
