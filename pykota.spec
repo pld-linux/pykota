@@ -11,6 +11,8 @@ Group:		Applications/Printing
 Source0:	%{name}-%{version}.tar.bz2
 # Source0-md5:	6e4b3232420592695388cbb27511e668
 URL:		http://www.pykota.com/
+BuildRequires:	docbook-utils
+BuildRequires:	docbook-dtd41-sgml
 BuildRequires:	ghostscript
 BuildRequires:	net-snmp-utils
 BuildRequires:	python-chardet
@@ -50,16 +52,25 @@ mv -f man/{el_GR,el}
 mv -f man/{nb_NO,nb}
 mv -f man/{sv_SE,sv}
 
+find -name .svn | xargs rm -rf
+
 %build
 python checkdeps.py
 
 python setup.py build
+
+cd docs
+mkdir html
+docbook2html -o html pykota.sgml
+docbook2pdf pykota.sgml
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 python setup.py install \
 	--root=$RPM_BUILD_ROOT --optimize=2
+
+rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/%{name}
 
 %find_lang %{name}
 
@@ -68,6 +79,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
+%doc CREDITS FAQ LICENSE README SECURITY TODO
+%doc openoffice qa-assistant docs/*.sxi docs/*.pdf docs/html 
 %attr(755,root,root) %{_bindir}/*
 %dir %{py_sitescriptdir}/%{name}
 %{py_sitescriptdir}/%{name}/*.py[co]
@@ -79,13 +92,12 @@ rm -rf $RPM_BUILD_ROOT
 %{py_sitescriptdir}/%{name}/loggers/*.py[co]
 %dir %{py_sitescriptdir}/%{name}/accounters
 %{py_sitescriptdir}/%{name}/accounters/*.py[co]
+%{py_sitescriptdir}/*.egg-info
 %dir %{_datadir}/%{name}
 %attr(755,root,root) %{_datadir}/%{name}/*.sh
-%attr(755,root,root) %{_datadir}/%{name}/*.php
 %attr(755,root,root) %{_datadir}/%{name}/*.py
 %attr(755,root,root) %{_datadir}/%{name}/cupspykota
 %{_datadir}/%{name}/*.pjl
-%{_datadir}/%{name}/*.pl
 %{_datadir}/%{name}/*.ps
 %{_datadir}/%{name}/logos
 %dir %{_datadir}/%{name}/cgi-bin
@@ -99,7 +111,7 @@ rm -rf $RPM_BUILD_ROOT
 %lang(es) %{_mandir}/es/man?/*
 %lang(fr) %{_mandir}/fr/man?/*
 %lang(it) %{_mandir}/it/man?/*
-%lang(nb) %{_mandir}/nb_NO/man?/*
+%lang(nb) %{_mandir}/nb/man?/*
 %lang(pl) %{_mandir}/pl/man?/*
 %lang(pt) %{_mandir}/pt/man?/*
 %lang(pt_BR) %{_mandir}/pt_BR/man?/*
