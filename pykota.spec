@@ -27,9 +27,9 @@ Requires:	python-pyosd
 Requires:	python-PyPAM
 Requires:	python-pysnmp >= 3.4.2
 Requires:	python-ReportLab
+Requires:	%{name}-storage
 Suggests:	net-snmp-utils
 Suggests:	netatalk
-Requires:	%{name}-storage
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		schemadir	/usr/share/openldap/schema
