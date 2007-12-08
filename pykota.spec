@@ -30,6 +30,8 @@ Requires:	python-ReportLab
 Requires:	%{name}-storage
 Suggests:	net-snmp-utils
 Suggests:	netatalk
+Provides:	group(pykota)
+Provides:	user(pykota)
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		schemadir	/usr/share/openldap/schema
@@ -127,7 +129,8 @@ docbook2pdf pykota.sgml
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{schemadir}
+install -d $RPM_BUILD_ROOT{%{schemadir},%{_sysconfdir}/%{name}} \
+	$RPM_BUILD_ROOT/var/lib/%{name}
 
 python setup.py install \
 	--root=$RPM_BUILD_ROOT \
@@ -136,13 +139,25 @@ python setup.py install \
 %py_postclean
 
 install initscripts/ldap/pykota.schema $RPM_BUILD_ROOT%{schemadir}
+install conf/pykota.conf.sample $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/pykota.conf
+install conf/pykotadmin.conf.sample $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/pykotadmin.conf
 
-rm -rf $RPM_BUILD_ROOT%{_datadir}/{doc/%{name},%{name}/{ldap,mysql,postgresql,sqlite}}
+rm -rf $RPM_BUILD_ROOT%{_datadir}/{doc/%{name},%{name}/{conf,ldap,mysql,postgresql,sqlite}}
 
 %find_lang %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post
+%groupadd -r -g 193 pykota
+%useradd -r -u 193 -d /usr/share/empty -s /bin/false -c "PyKota User" -g pykota pykota
+
+%postun
+if [ "$1" = "0" ]; then
+	%userremove %{name}
+	%groupremove %{name}
+fi
 
 %post -n openldap-schema-pykota
 # dependant schemas: cosine(uid) inetorgperson(displayName) nis(gidNumber)
@@ -159,6 +174,8 @@ fi
 %defattr(644,root,root,755)
 %doc CREDITS FAQ LICENSE README SECURITY TODO
 %doc openoffice qa-assistant docs/*.sxi docs/*.pdf docs/html 
+%attr(660,pykota,pykota) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/pykota.conf
+%attr(660,pykota,pykota) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/pykotadmin.conf
 %attr(755,root,root) %{_bindir}/*
 %dir %{py_sitescriptdir}/%{name}
 %{py_sitescriptdir}/%{name}/*.py[co]
@@ -215,6 +232,7 @@ fi
 %defattr(644,root,root,755)
 %doc initscripts/sqlite/*
 %{py_sitescriptdir}/%{name}/storages/sqlite*.py[co]
+/var/lib/%{name}
 
 %files -n openldap-schema-pykota
 %defattr(644,root,root,755)
