@@ -68,7 +68,10 @@ docbook2pdf pykota.sgml
 rm -rf $RPM_BUILD_ROOT
 
 python setup.py install \
-	--root=$RPM_BUILD_ROOT --optimize=2
+	--root=$RPM_BUILD_ROOT \
+	--optimize=2
+
+%py_postclean
 
 rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/%{name}
 
