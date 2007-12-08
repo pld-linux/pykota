@@ -19,7 +19,9 @@ BuildRequires:	python-mx-DateTime-devel
 BuildRequires:	python-MySQLdb >= 1.2
 BuildRequires:	python-PIL
 BuildRequires:	python-PIL-devel
+%ifarch %{ix86}
 BuildRequires:	python-psyco
+%endif
 BuildRequires:	python-PyGreSQL
 BuildRequires:	python-pyosd
 BuildRequires:	python-PyPAM
