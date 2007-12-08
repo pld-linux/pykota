@@ -103,7 +103,7 @@ Requires:	openldap-servers
 This package contains pykota.schema for openldap.
 
 %description -n openldap-schema-pykota -l pl.UTF-8
-Ten pakiet zawiera schemat pykoty dla openldap-a.
+Ten pakiet zawiera schemat pykoty dla openldapa.
 
 %prep
 %setup -q
