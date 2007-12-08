@@ -151,7 +151,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 %groupadd -r -g 193 pykota
-%useradd -r -u 193 -d /usr/share/empty -s /bin/false -c "PyKota User" -g pykota pykota
+%useradd -r -u 193 -d /etc/%{name} -s /bin/false -c "PyKota User" -g pykota pykota
 
 %postun
 if [ "$1" = "0" ]; then
