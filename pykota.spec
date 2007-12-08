@@ -42,6 +42,13 @@ Narzędzie do limitowania i rozliczania wydruków.
 
 %prep
 %setup -q
+mv -f po/{el_GR,el}
+mv -f po/{nb_NO,nb}
+mv -f po/{sv_SE,sv}
+
+mv -f man/{el_GR,el}
+mv -f man/{nb_NO,nb}
+mv -f man/{sv_SE,sv}
 
 %build
 python checkdeps.py
@@ -53,10 +60,6 @@ rm -rf $RPM_BUILD_ROOT
 
 python setup.py install \
 	--root=$RPM_BUILD_ROOT --optimize=2
-
-mv -f $RPM_BUILD_ROOT%{_mandir}/{el_GR,el}
-mv -f $RPM_BUILD_ROOT%{_mandir}/{nb_NO,nb}
-mv -f $RPM_BUILD_ROOT%{_mandir}/{sv_SE,sv}
 
 %find_lang %{name}
 
