@@ -17,7 +17,7 @@ Requires:	ghostscript
 Requires:	python-chardet
 Requires:	python-pkipplib
 Requires:	python-jaxml
-Requires:	python-mx-DateTime
+Requires:	python-mx-DateTime >= 2.0.3
 Requires:	python-PIL
 Requires:	python-pkpgcounter
 %ifarch %{ix86}
@@ -28,7 +28,7 @@ Requires:	python-PyPAM
 Requires:	python-pysnmp >= 3.4.2
 Requires:	python-ReportLab
 Requires:	%{name}-storage
-Suggests:	net-snmp-utils
+Suggests:	net-snmp-utils >= 4.2.5
 Suggests:	netatalk
 Provides:	group(pykota)
 Provides:	user(pykota)
@@ -174,8 +174,9 @@ fi
 %defattr(644,root,root,755)
 %doc CREDITS FAQ LICENSE README SECURITY TODO
 %doc openoffice qa-assistant docs/*.sxi docs/*.pdf docs/html 
-%attr(660,pykota,pykota) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/pykota.conf
-%attr(660,pykota,pykota) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/pykotadmin.conf
+%attr(750,pykota,pykota) %dir %{_sysconfdir}/%{name}
+%attr(640,pykota,pykota) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/pykota.conf
+%attr(600,pykota,pykota) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/pykotadmin.conf
 %attr(755,root,root) %{_bindir}/*
 %dir %{py_sitescriptdir}/%{name}
 %{py_sitescriptdir}/%{name}/*.py[co]
