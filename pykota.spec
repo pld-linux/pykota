@@ -13,12 +13,16 @@ Source0:	%{name}-%{version}.tar.bz2
 URL:		http://www.pykota.com/
 BuildRequires:	ghostscript
 BuildRequires:	net-snmp-utils
+BuildRequires:	python-chardet
+BuildRequires:	python-pkipplib
+BuildRequires:	python-jaxml
 BuildRequires:	python-ldap
 BuildRequires:	python-mx-DateTime
 BuildRequires:	python-mx-DateTime-devel
 BuildRequires:	python-MySQLdb >= 1.2
 BuildRequires:	python-PIL
 BuildRequires:	python-PIL-devel
+BuildRequires:	python-pkpgcounter
 %ifarch %{ix86}
 BuildRequires:	python-psyco
 %endif
