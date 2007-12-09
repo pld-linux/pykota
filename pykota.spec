@@ -10,6 +10,7 @@ Group:		Applications/Printing
 # svn co svn://svn.librelogiciel.com/pykota/tags/1.26/
 Source0:	%{name}-%{version}.tar.bz2
 # Source0-md5:	6e4b3232420592695388cbb27511e668
+Patch0:		%{name}-conf.patch
 URL:		http://www.pykota.com/
 BuildRequires:	docbook-utils
 BuildRequires:	docbook-dtd41-sgml
@@ -112,6 +113,8 @@ Ten pakiet zawiera schemat pykoty dla openldapa.
 
 %prep
 %setup -q
+%patch0 -p1
+
 mv -f po/{el_GR,el}
 mv -f po/{nb_NO,nb}
 mv -f po/{sv_SE,sv}
