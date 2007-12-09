@@ -36,8 +36,8 @@ Requires:	python-pyosd
 Requires:	python-PyPAM
 Requires:	python-pysnmp >= 3.4.2
 Requires:	python-ReportLab
-Requires:	%{name}-common = %{name}-%{version}-%{release}
-Requires:	%{name}-storage = %{name}-%{version}-%{release}
+Requires:	%{name}-common = %{version}-%{release}
+Requires:	%{name}-storage = %{version}-%{release}
 Suggests:	net-snmp-utils >= 4.2.5
 Suggests:	netatalk
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -69,8 +69,8 @@ Summary:	LDAP storage backend for pykota
 Summary(pl.UTF-8):	Backend przechowywania danych w LDAP dla pykoty
 Group:		Applications/Printing
 Requires:	python-ldap
-Requires:	%{name}-common = %{name}-%{version}-%{release}
-Provides:	%{name}-storage = %{name}-%{version}-%{release}
+Requires:	%{name}-common = %{version}-%{release}
+Provides:	%{name}-storage
 
 %description storage-ldap
 LDAP storage backend for pykota.
@@ -83,8 +83,8 @@ Summary:	MySQL storage backend for pykota
 Summary(pl.UTF-8):	Backend przechowywania danych w MySQL dla pykoty
 Group:		Applications/Printing
 Requires:	python-MySQLdb >= 1.2
-Requires:	%{name}-common = %{name}-%{version}-%{release}
-Provides:	%{name}-storage = %{name}-%{version}-%{release}
+Requires:	%{name}-common = %{version}-%{release}
+Provides:	%{name}-storage
 
 %description storage-mysql
 MySQL storage backend for pykota.
@@ -97,8 +97,8 @@ Summary:	PostgreSQL storage backend for pykota
 Summary(pl.UTF-8):	Backend przechowywania danych w PostgreSQL dla pykoty
 Group:		Applications/Printing
 Requires:	python-PyGreSQL
-Requires:	%{name}-common = %{name}-%{version}-%{release}
-Provides:	%{name}-storage = %{name}-%{version}-%{release}
+Requires:	%{name}-common = %{version}-%{release}
+Provides:	%{name}-storage
 
 %description storage-postgres
 PostgreSQL storage backend for pykota.
@@ -111,8 +111,8 @@ Summary:	SQLite storage backend for pykota
 Summary(pl.UTF-8):	Backend przechowywania danych w SQLite dla pykoty
 Group:		Applications/Printing
 Requires:	python-sqlite >= 2.0.5
-Requires:	%{name}-common = %{name}-%{version}-%{release}
-Provides:	%{name}-storage = %{name}-%{version}-%{release}
+Requires:	%{name}-common = %{version}-%{release}
+Provides:	%{name}-storage
 
 %description storage-sqlite
 SQLite storage backend for pykota.
