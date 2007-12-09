@@ -11,6 +11,7 @@ Group:		Applications/Printing
 Source0:	%{name}-%{version}.tar.bz2
 # Source0-md5:	6e4b3232420592695388cbb27511e668
 Patch0:		%{name}-conf.patch
+Patch1:		%{name}-css.patch
 URL:		http://www.pykota.com/
 BuildRequires:	docbook-utils
 BuildRequires:	docbook-dtd41-sgml
@@ -114,6 +115,7 @@ Ten pakiet zawiera schemat pykoty dla openldapa.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 mv -f po/{el_GR,el}
 mv -f po/{nb_NO,nb}
@@ -151,7 +153,7 @@ install conf/pykotadmin.conf.sample $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/pykota
 
 ln -s %{_datadir}/%{name}/cupspykota $RPM_BUILD_ROOT%{cups_serverbin}/backend/cupspykota
 
-sqlite3 $RPM_BUILD_ROOT/var/lib/%{name}/pykota.db <initscripts/sqlite/pykota.sqlite
+sqlite3 $RPM_BUILD_ROOT/var/lib/%{name}/pykota.db <initscripts/sqlite/pykota-sqlite.sql
 
 rm -rf $RPM_BUILD_ROOT%{_datadir}/{doc/%{name},%{name}/{conf,ldap,mysql,postgresql,sqlite}}
 
