@@ -1,0 +1,36 @@
+diff -ur pykota-1.26/cgi-bin/dumpykota.cgi pykota-1.26-css/cgi-bin/dumpykota.cgi
+--- pykota-1.26/cgi-bin/dumpykota.cgi	2007-12-06 19:51:43.000000000 +0100
++++ pykota-1.26-css/cgi-bin/dumpykota.cgi	2007-12-09 01:18:01.000000000 +0100
+@@ -39,7 +39,7 @@
+ <html>
+   <head>
+     <title>%s</title>
+-    <link rel="stylesheet" type="text/css" href="/pykota.css" />
++    <link rel="stylesheet" type="text/css" href="pykota.css" />
+     <script type="text/javascript">
+     <!--
+       function checkvalues() 
+diff -ur pykota-1.26/cgi-bin/printquota.cgi pykota-1.26-css/cgi-bin/printquota.cgi
+--- pykota-1.26/cgi-bin/printquota.cgi	2007-12-06 19:51:43.000000000 +0100
++++ pykota-1.26-css/cgi-bin/printquota.cgi	2007-12-09 01:18:05.000000000 +0100
+@@ -41,7 +41,7 @@
+ <html>
+   <head>
+     <title>%s</title>
+-    <link rel="stylesheet" type="text/css" href="/pykota.css" />
++    <link rel="stylesheet" type="text/css" href="pykota.css" />
+   </head>
+   <body>
+     <!-- %s %s -->
+diff -ur pykota-1.26/cgi-bin/pykotme.cgi pykota-1.26-css/cgi-bin/pykotme.cgi
+--- pykota-1.26/cgi-bin/pykotme.cgi	2007-12-06 19:51:43.000000000 +0100
++++ pykota-1.26-css/cgi-bin/pykotme.cgi	2007-12-09 01:18:12.000000000 +0100
+@@ -41,7 +41,7 @@
+ <html>
+   <head>
+     <title>%s</title>
+-    <link rel="stylesheet" type="text/css" href="/pykota.css" />
++    <link rel="stylesheet" type="text/css" href="pykota.css" />
+   </head>
+   <body>
+     <!-- %s %s -->
