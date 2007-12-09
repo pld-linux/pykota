@@ -1,20 +1,15 @@
-#
-# TODO:
-#	- webapps integration for cgi scripts
-#	- verify cups backend permissions
-#	- tests
-#
 Name:		pykota
 Summary:	Print Quota and Accounting Software Solution
 Summary(pl.UTF-8):	Narzędzie do limitowania i rozliczania wydruków
 Version:	1.26
-Release:	0.3
+Release:	0.5
 License:	GPLv2
 Group:		Applications/Printing
 # NOTE: from svn:
 # svn co svn://svn.librelogiciel.com/pykota/tags/1.26/
 Source0:	%{name}-%{version}.tar.bz2
 # Source0-md5:	6e4b3232420592695388cbb27511e668
+Source1:	%{name}-httpd.conf
 Patch0:		%{name}-conf.patch
 Patch1:		%{name}-css.patch
 URL:		http://www.pykota.com/
@@ -44,6 +39,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		cups_serverbin	%{_prefix}/lib/cups
 %define		schemadir	/usr/share/openldap/schema
+%define		httpdir		/home/services/httpd
+%define		_webapps	/etc/webapps
+%define		_webapp		%{name}
 
 %description
 Print Quota and Accounting Software Solution.
@@ -63,6 +61,20 @@ Common files for pykota.
 
 %description common -l pl.UTF-8
 Wspólne pliki dla pytkoty.
+
+%package cgi
+Summary:	CGI interface for pykota
+Summary(pl.UTF-8):	Interfejs CGI dla pytkoty
+Group:		Applications/Printing
+Requires:	webapps
+Requires:	webserver
+Requires:	%{name} = %{version}-%{release}
+
+%description cgi
+CGI interface for pykota.
+
+%description cgi -l pl.UTF-8
+Interfejs CGI dla pykoty.
 
 %package storage-ldap
 Summary:	LDAP storage backend for pykota
@@ -148,8 +160,6 @@ mv -f man/{sv_SE,sv}
 
 find -name .svn | xargs rm -rf
 
-cp cgi-bin/README README.cgi
-
 %build
 python setup.py build
 
@@ -162,16 +172,24 @@ docbook2pdf pykota.sgml
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{schemadir},%{_sysconfdir}/%{name}} \
 	$RPM_BUILD_ROOT%{cups_serverbin}/backend \
-	$RPM_BUILD_ROOT/var/lib/%{name}
+	$RPM_BUILD_ROOT/var/lib/%{name} \
+	$RPM_BUILD_ROOT%{httpdir}/cgi-bin/%{name} \
+	$RPM_BUILD_ROOT%{_webapps}/%{_webapp}
 
 python setup.py install \
 	--root=$RPM_BUILD_ROOT \
 	--optimize=2
 
-install stylesheets/pykota.css $RPM_BUILD_ROOT%{_datadir}/%{name}/cgi-bin
+install cgi-bin/*.cgi $RPM_BUILD_ROOT%{httpdir}/cgi-bin/%{name}
+install stylesheets/pykota.css $RPM_BUILD_ROOT%{httpdir}/cgi-bin/%{name}
+
 install initscripts/ldap/pykota.schema $RPM_BUILD_ROOT%{schemadir}
+
 install conf/pykota.conf.sample $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/pykota.conf
 install conf/pykotadmin.conf.sample $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/pykotadmin.conf
+
+install %{SOURCE1} $RPM_BUILD_ROOT%{_webapps}/%{_webapp}/httpd.conf
+install %{SOURCE1} $RPM_BUILD_ROOT%{_webapps}/%{_webapp}/apache.conf
 
 ln -s %{_datadir}/%{name}/cupspykota $RPM_BUILD_ROOT%{cups_serverbin}/backend/cupspykota
 
@@ -185,14 +203,32 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/{doc/%{name},%{name}/{conf,ldap,mysql,postgres
 rm -rf $RPM_BUILD_ROOT
 
 %pre common
-%groupadd -r -g 193 pykota
-%useradd -r -u 193 -d /etc/%{name} -s /bin/false -c "PyKota User" -g pykota pykota
+%groupadd -r -g 501 pykota
+%useradd -r -u 501 -d /etc/%{name} -s /bin/sh -c "PyKota User" -g pykota pykota
 
 %postun common
 if [ "$1" = "0" ]; then
 	%userremove %{name}
 	%groupremove %{name}
 fi
+
+%triggerin cgi -- apache1 < 1.3.37-3, apache1-base
+%webapp_register apache %{_webapp}
+
+%triggerun cgi -- apache1 < 1.3.37-3, apache1-base
+%webapp_unregister apache %{_webapp}
+
+%triggerin cgi -- apache < 2.2.0, apache-base
+%webapp_register httpd %{_webapp}
+
+%triggerun cgi -- apache < 2.2.0, apache-base
+%webapp_unregister httpd %{_webapp}
+
+%triggerin cgi -- lighttpd
+%webapp_register lighttpd %{_webapp}
+
+%triggerun cgi -- lighttpd
+%webapp_unregister lighttpd %{_webapp}
 
 %post -n openldap-schema-pykota
 # dependant schemas: cosine(uid) inetorgperson(displayName) nis(gidNumber)
@@ -207,11 +243,11 @@ fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc CREDITS FAQ LICENSE README SECURITY TODO README.cgi
+%doc CREDITS FAQ LICENSE README SECURITY TODO
 %doc openoffice qa-assistant docs/*.sxi docs/*.pdf docs/html 
-%attr(750,pykota,pykota) %dir %{_sysconfdir}/%{name}
-%attr(640,pykota,pykota) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/pykota.conf
-%attr(600,pykota,pykota) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/pykotadmin.conf
+%attr(750,lp,pykota) %dir %{_sysconfdir}/%{name}
+%attr(640,lp,pykota) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/pykota.conf
+%attr(640,lp,pykota) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/pykotadmin.conf
 %attr(755,root,root) %{_bindir}/*
 %{py_sitescriptdir}/%{name}/*.py*
 %{py_sitescriptdir}/%{name}/storages/__init__.py*
@@ -226,14 +262,10 @@ fi
 %dir %{_datadir}/%{name}
 %attr(755,root,root) %{_datadir}/%{name}/*.sh
 %attr(755,root,root) %{_datadir}/%{name}/*.py
-# TODO: verify if it shouldn't be 700 as doc says
 %attr(755,root,root) %{_datadir}/%{name}/cupspykota
 %{_datadir}/%{name}/*.pjl
 %{_datadir}/%{name}/*.ps
 %{_datadir}/%{name}/logos
-%dir %{_datadir}/%{name}/cgi-bin
-%attr(755,pykota,pykota) %{_datadir}/%{name}/cgi-bin/*.cgi
-%attr(644,root,root) %{_datadir}/%{name}/cgi-bin/*.css
 
 %attr(755,root,root) %{cups_serverbin}/backend/cupspykota
 
@@ -252,6 +284,16 @@ fi
 #%lang(th) %{_mandir}/th/man?/*
 #%lang(tr) %{_mandir}/tr/man?/*
 #%lang(zh_TW) %{_mandir}/zh_TW/man?/*
+
+%files cgi
+%defattr(644,root,root,755)
+%doc cgi-bin/README
+%attr(755,root,root) %dir %{_webapps}/%{_webapp}
+%attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_webapps}/%{_webapp}/httpd.conf
+%attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_webapps}/%{_webapp}/apache.conf
+%attr(755,pykota,pykota) %dir %{httpdir}/cgi-bin/%{name}
+%attr(755,pykota,pykota) %{httpdir}/cgi-bin/%{name}/*.cgi
+%attr(644,root,root) %{httpdir}/cgi-bin/%{name}/*.css
 
 %files common
 %defattr(644,root,root,755)
@@ -276,8 +318,8 @@ fi
 %defattr(644,root,root,755)
 %doc initscripts/sqlite/*
 %{py_sitescriptdir}/%{name}/storages/sqlite*.py*
-%attr(750,pykota,pykota) /var/lib/%{name}
-%attr(660,pykota,pykota) %config(noreplace) %verify(not md5 mtime size) /var/lib/%{name}/pykota.db
+%attr(750,lp,pykota) /var/lib/%{name}
+%attr(660,lp,pykota) %config(noreplace) %verify(not md5 mtime size) /var/lib/%{name}/pykota.db
 
 %files -n openldap-schema-pykota
 %defattr(644,root,root,755)
