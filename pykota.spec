@@ -13,6 +13,8 @@ Source0:	%{name}-%{version}.tar.bz2
 URL:		http://www.pykota.com/
 BuildRequires:	docbook-utils
 BuildRequires:	docbook-dtd41-sgml
+BuildRequires:	sqlite3
+Requires:	cups >= 1:1.2.0
 Requires:	ghostscript
 Requires:	python-chardet
 Requires:	python-pkipplib
@@ -34,6 +36,7 @@ Provides:	group(pykota)
 Provides:	user(pykota)
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%define		cups_serverbin	%{_prefix}/lib/cups
 %define		schemadir	/usr/share/openldap/schema
 
 %description
@@ -130,6 +133,7 @@ docbook2pdf pykota.sgml
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{schemadir},%{_sysconfdir}/%{name}} \
+	$RPM_BUILD_ROOT%{cups_serverbin}/backend \
 	$RPM_BUILD_ROOT/var/lib/%{name}
 
 python setup.py install \
@@ -141,6 +145,10 @@ python setup.py install \
 install initscripts/ldap/pykota.schema $RPM_BUILD_ROOT%{schemadir}
 install conf/pykota.conf.sample $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/pykota.conf
 install conf/pykotadmin.conf.sample $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/pykotadmin.conf
+
+ln -s %{_datadir}/%{name}/cupspykota $RPM_BUILD_ROOT%{cups_serverbin}/backend/cupspykota
+
+sqlite3 $RPM_BUILD_ROOT/var/lib/%{name}/pykota.db <initscripts/sqlite/pykota.sqlite
 
 rm -rf $RPM_BUILD_ROOT%{_datadir}/{doc/%{name},%{name}/{conf,ldap,mysql,postgresql,sqlite}}
 
@@ -193,12 +201,15 @@ fi
 %dir %{_datadir}/%{name}
 %attr(755,root,root) %{_datadir}/%{name}/*.sh
 %attr(755,root,root) %{_datadir}/%{name}/*.py
+# TODO: verify if it shouldn't be 700 as doc says
 %attr(755,root,root) %{_datadir}/%{name}/cupspykota
 %{_datadir}/%{name}/*.pjl
 %{_datadir}/%{name}/*.ps
 %{_datadir}/%{name}/logos
 %dir %{_datadir}/%{name}/cgi-bin
 %attr(755,root,root) %{_datadir}/%{name}/cgi-bin/*.cgi
+
+%attr(755,root,root) %{cups_serverbin}/backend/cupspykota
 
 %{_mandir}/man?/*
 %lang(el) %{_mandir}/el/man?/*
@@ -233,7 +244,8 @@ fi
 %defattr(644,root,root,755)
 %doc initscripts/sqlite/*
 %{py_sitescriptdir}/%{name}/storages/sqlite*.py[co]
-/var/lib/%{name}
+%attr(750,pykota,pykota) /var/lib/%{name}
+%attr(660,pykota,pykota) %config(noreplace) %verify(not md5 mtime size) /var/lib/%{name}/pykota.db
 
 %files -n openldap-schema-pykota
 %defattr(644,root,root,755)
