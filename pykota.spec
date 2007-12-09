@@ -1,9 +1,14 @@
-# TODO: files, initscript, make it working
+#
+# TODO:
+#	- webapps integration for cgi scripts
+#	- verify cups backend permissions
+#	- tests
+#
 Name:		pykota
 Summary:	Print Quota and Accounting Software Solution
 Summary(pl.UTF-8):	Narzędzie do limitowania i rozliczania wydruków
 Version:	1.26
-Release:	0.1
+Release:	0.2
 License:	GPLv2
 Group:		Applications/Printing
 # NOTE: from svn:
