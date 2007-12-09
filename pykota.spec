@@ -36,11 +36,10 @@ Requires:	python-pyosd
 Requires:	python-PyPAM
 Requires:	python-pysnmp >= 3.4.2
 Requires:	python-ReportLab
-Requires:	%{name}-storage
+Requires:	%{name}-common = %{name}-%{version}-%{release}
+Requires:	%{name}-storage = %{name}-%{version}-%{release}
 Suggests:	net-snmp-utils >= 4.2.5
 Suggests:	netatalk
-Provides:	group(pykota)
-Provides:	user(pykota)
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		cups_serverbin	%{_prefix}/lib/cups
@@ -52,11 +51,25 @@ Print Quota and Accounting Software Solution.
 %description -l pl.UTF-8
 Narzędzie do limitowania i rozliczania wydruków.
 
+%package common
+Summary:	Common files for pykota
+Summary(pl.UTF-8):	Wspólne pliki dla pytkoty
+Group:		Applications/Printing
+Provides:	group(pykota)
+Provides:	user(pykota)
+
+%description
+Common files for pykota.
+
+%description -l pl.UTF-8
+Wspólne pliki dla pytkoty.
+
 %package storage-ldap
 Summary:	LDAP storage backend for pykota
 Summary(pl.UTF-8):	Backend przechowywania danych w LDAP dla pykoty
 Group:		Applications/Printing
 Requires:	python-ldap
+Requires:	%{name}-common = %{name}-%{version}-%{release}
 Provides:	%{name}-storage = %{name}-%{version}-%{release}
 
 %description storage-ldap
@@ -70,6 +83,7 @@ Summary:	MySQL storage backend for pykota
 Summary(pl.UTF-8):	Backend przechowywania danych w MySQL dla pykoty
 Group:		Applications/Printing
 Requires:	python-MySQLdb >= 1.2
+Requires:	%{name}-common = %{name}-%{version}-%{release}
 Provides:	%{name}-storage = %{name}-%{version}-%{release}
 
 %description storage-mysql
@@ -83,6 +97,7 @@ Summary:	PostgreSQL storage backend for pykota
 Summary(pl.UTF-8):	Backend przechowywania danych w PostgreSQL dla pykoty
 Group:		Applications/Printing
 Requires:	python-PyGreSQL
+Requires:	%{name}-common = %{name}-%{version}-%{release}
 Provides:	%{name}-storage = %{name}-%{version}-%{release}
 
 %description storage-postgres
@@ -96,6 +111,7 @@ Summary:	SQLite storage backend for pykota
 Summary(pl.UTF-8):	Backend przechowywania danych w SQLite dla pykoty
 Group:		Applications/Printing
 Requires:	python-sqlite >= 2.0.5
+Requires:	%{name}-common = %{name}-%{version}-%{release}
 Provides:	%{name}-storage = %{name}-%{version}-%{release}
 
 %description storage-sqlite
@@ -170,11 +186,11 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/{doc/%{name},%{name}/{conf,ldap,mysql,postgres
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%pre
+%pre common
 %groupadd -r -g 193 pykota
 %useradd -r -u 193 -d /etc/%{name} -s /bin/false -c "PyKota User" -g pykota pykota
 
-%postun
+%postun common
 if [ "$1" = "0" ]; then
 	%userremove %{name}
 	%groupremove %{name}
@@ -199,9 +215,7 @@ fi
 %attr(640,pykota,pykota) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/pykota.conf
 %attr(600,pykota,pykota) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/pykotadmin.conf
 %attr(755,root,root) %{_bindir}/*
-%dir %{py_sitescriptdir}/%{name}
 %{py_sitescriptdir}/%{name}/*.py[co]
-%dir %{py_sitescriptdir}/%{name}/storages
 %{py_sitescriptdir}/%{name}/storages/__init__.py[co]
 %{py_sitescriptdir}/%{name}/storages/sql.py[co]
 %dir %{py_sitescriptdir}/%{name}/reporters
@@ -240,6 +254,11 @@ fi
 #%lang(th) %{_mandir}/th/man?/*
 #%lang(tr) %{_mandir}/tr/man?/*
 #%lang(zh_TW) %{_mandir}/zh_TW/man?/*
+
+%files common
+%defattr(644,root,root,755)
+%dir %{py_sitescriptdir}/%{name}
+%dir %{py_sitescriptdir}/%{name}/storages
 
 %files storage-ldap
 %defattr(644,root,root,755)
