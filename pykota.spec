@@ -8,7 +8,7 @@ Name:		pykota
 Summary:	Print Quota and Accounting Software Solution
 Summary(pl.UTF-8):	Narzędzie do limitowania i rozliczania wydruków
 Version:	1.26
-Release:	0.2
+Release:	0.3
 License:	GPLv2
 Group:		Applications/Printing
 # NOTE: from svn:
@@ -168,8 +168,6 @@ python setup.py install \
 	--root=$RPM_BUILD_ROOT \
 	--optimize=2
 
-%py_postclean
-
 install stylesheets/pykota.css $RPM_BUILD_ROOT%{_datadir}/%{name}/cgi-bin
 install initscripts/ldap/pykota.schema $RPM_BUILD_ROOT%{schemadir}
 install conf/pykota.conf.sample $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/pykota.conf
@@ -215,15 +213,15 @@ fi
 %attr(640,pykota,pykota) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/pykota.conf
 %attr(600,pykota,pykota) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/pykotadmin.conf
 %attr(755,root,root) %{_bindir}/*
-%{py_sitescriptdir}/%{name}/*.py[co]
-%{py_sitescriptdir}/%{name}/storages/__init__.py[co]
-%{py_sitescriptdir}/%{name}/storages/sql.py[co]
+%{py_sitescriptdir}/%{name}/*.py*
+%{py_sitescriptdir}/%{name}/storages/__init__.py*
+%{py_sitescriptdir}/%{name}/storages/sql.py*
 %dir %{py_sitescriptdir}/%{name}/reporters
-%{py_sitescriptdir}/%{name}/reporters/*.py[co]
+%{py_sitescriptdir}/%{name}/reporters/*.py*
 %dir %{py_sitescriptdir}/%{name}/loggers
-%{py_sitescriptdir}/%{name}/loggers/*.py[co]
+%{py_sitescriptdir}/%{name}/loggers/*.py*
 %dir %{py_sitescriptdir}/%{name}/accounters
-%{py_sitescriptdir}/%{name}/accounters/*.py[co]
+%{py_sitescriptdir}/%{name}/accounters/*.py*
 %{py_sitescriptdir}/*.egg-info
 %dir %{_datadir}/%{name}
 %attr(755,root,root) %{_datadir}/%{name}/*.sh
@@ -262,22 +260,22 @@ fi
 
 %files storage-ldap
 %defattr(644,root,root,755)
-%{py_sitescriptdir}/%{name}/storages/ldap*.py[co]
+%{py_sitescriptdir}/%{name}/storages/ldap*.py*
 
 %files storage-mysql
 %defattr(644,root,root,755)
 %doc initscripts/mysql/*
-%{py_sitescriptdir}/%{name}/storages/mysql*.py[co]
+%{py_sitescriptdir}/%{name}/storages/mysql*.py*
 
 %files storage-postgres
 %defattr(644,root,root,755)
 %doc initscripts/postgresql/*
-%{py_sitescriptdir}/%{name}/storages/pg*.py[co]
+%{py_sitescriptdir}/%{name}/storages/pg*.py*
 
 %files storage-sqlite
 %defattr(644,root,root,755)
 %doc initscripts/sqlite/*
-%{py_sitescriptdir}/%{name}/storages/sqlite*.py[co]
+%{py_sitescriptdir}/%{name}/storages/sqlite*.py*
 %attr(750,pykota,pykota) /var/lib/%{name}
 %attr(660,pykota,pykota) %config(noreplace) %verify(not md5 mtime size) /var/lib/%{name}/pykota.db
 
