@@ -226,19 +226,19 @@ fi
 %attr(755,root,root) %{cups_serverbin}/backend/cupspykota
 
 %{_mandir}/man?/*
-%lang(el) %{_mandir}/el/man?/*
-%lang(de) %{_mandir}/de/man?/*
-%lang(es) %{_mandir}/es/man?/*
+#%lang(de) %{_mandir}/de/man?/*
+#%lang(el) %{_mandir}/el/man?/*
+#%lang(es) %{_mandir}/es/man?/*
 %lang(fr) %{_mandir}/fr/man?/*
-%lang(it) %{_mandir}/it/man?/*
-%lang(nb) %{_mandir}/nb/man?/*
-%lang(pl) %{_mandir}/pl/man?/*
-%lang(pt) %{_mandir}/pt/man?/*
-%lang(pt_BR) %{_mandir}/pt_BR/man?/*
-%lang(sv) %{_mandir}/sv/man?/*
-%lang(th) %{_mandir}/th/man?/*
-%lang(tr) %{_mandir}/tr/man?/*
-%lang(zh_TW) %{_mandir}/zh_TW/man?/*
+#%lang(it) %{_mandir}/it/man?/*
+#%lang(nb) %{_mandir}/nb/man?/*
+#%lang(pl) %{_mandir}/pl/man?/*
+#%lang(pt) %{_mandir}/pt/man?/*
+#%lang(pt_BR) %{_mandir}/pt_BR/man?/*
+#%lang(sv) %{_mandir}/sv/man?/*
+#%lang(th) %{_mandir}/th/man?/*
+#%lang(tr) %{_mandir}/tr/man?/*
+#%lang(zh_TW) %{_mandir}/zh_TW/man?/*
 
 %files storage-ldap
 %defattr(644,root,root,755)
