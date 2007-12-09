@@ -127,6 +127,8 @@ mv -f man/{sv_SE,sv}
 
 find -name .svn | xargs rm -rf
 
+cp cgi-bin/README README.cgi
+
 %build
 python setup.py build
 
@@ -147,6 +149,7 @@ python setup.py install \
 
 %py_postclean
 
+install stylesheets/pykota.css $RPM_BUILD_ROOT%{_datadir}/%{name}/cgi-bin
 install initscripts/ldap/pykota.schema $RPM_BUILD_ROOT%{schemadir}
 install conf/pykota.conf.sample $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/pykota.conf
 install conf/pykotadmin.conf.sample $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/pykotadmin.conf
@@ -155,7 +158,7 @@ ln -s %{_datadir}/%{name}/cupspykota $RPM_BUILD_ROOT%{cups_serverbin}/backend/cu
 
 sqlite3 $RPM_BUILD_ROOT/var/lib/%{name}/pykota.db <initscripts/sqlite/pykota-sqlite.sql
 
-rm -rf $RPM_BUILD_ROOT%{_datadir}/{doc/%{name},%{name}/{conf,ldap,mysql,postgresql,sqlite}}
+rm -rf $RPM_BUILD_ROOT%{_datadir}/{doc/%{name},%{name}/{conf,ldap,mysql,postgresql,sqlite,stylesheets}}
 
 %find_lang %{name}
 
@@ -185,7 +188,7 @@ fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc CREDITS FAQ LICENSE README SECURITY TODO
+%doc CREDITS FAQ LICENSE README SECURITY TODO README.cgi
 %doc openoffice qa-assistant docs/*.sxi docs/*.pdf docs/html 
 %attr(750,pykota,pykota) %dir %{_sysconfdir}/%{name}
 %attr(640,pykota,pykota) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/pykota.conf
@@ -212,7 +215,8 @@ fi
 %{_datadir}/%{name}/*.ps
 %{_datadir}/%{name}/logos
 %dir %{_datadir}/%{name}/cgi-bin
-%attr(755,root,root) %{_datadir}/%{name}/cgi-bin/*.cgi
+%attr(755,pykota,pykota) %{_datadir}/%{name}/cgi-bin/*.cgi
+%attr(644,root,root) %{_datadir}/%{name}/cgi-bin/*.css
 
 %attr(755,root,root) %{cups_serverbin}/backend/cupspykota
 
