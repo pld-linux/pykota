@@ -170,7 +170,7 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/{doc/%{name},%{name}/{conf,ldap,mysql,postgres
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post
+%pre
 %groupadd -r -g 193 pykota
 %useradd -r -u 193 -d /etc/%{name} -s /bin/false -c "PyKota User" -g pykota pykota
 
