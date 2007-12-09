@@ -58,10 +58,10 @@ Group:		Applications/Printing
 Provides:	group(pykota)
 Provides:	user(pykota)
 
-%description
+%description common
 Common files for pykota.
 
-%description -l pl.UTF-8
+%description common -l pl.UTF-8
 Wspólne pliki dla pytkoty.
 
 %package storage-ldap
