@@ -226,6 +226,7 @@ fi
 %attr(755,root,root) %{cups_serverbin}/backend/cupspykota
 
 %{_mandir}/man?/*
+# commented out fake placeholders
 #%lang(de) %{_mandir}/de/man?/*
 #%lang(el) %{_mandir}/el/man?/*
 #%lang(es) %{_mandir}/es/man?/*
