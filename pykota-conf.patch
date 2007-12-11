@@ -1,63 +1,23 @@
 diff -ur pykota-1.26/conf/pykota.conf.sample pykota-1.26-conf/conf/pykota.conf.sample
 --- pykota-1.26/conf/pykota.conf.sample	2007-12-06 19:51:31.000000000 +0100
 +++ pykota-1.26-conf/conf/pykota.conf.sample	2007-12-09 01:09:47.000000000 +0100
-@@ -56,8 +56,8 @@
- # SQLite3 : comment this section out if you use another backend    #
+@@ -56,7 +56,7 @@
  ####################################################################
  
--#storagebackend : sqlitestorage
+ #storagebackend : sqlitestorage
 -#storagename: /etc/pykota/pykota.db
-+storagebackend : sqlitestorage
-+storagename: /var/lib/pykota/pykota.db
++#storagename: /var/lib/pykota/pykota.db
  
  ####################################################################
  
-@@ -66,17 +66,17 @@
+@@ -66,8 +66,8 @@
  ############################################################################
  # PostgreSQL or MySQL: comment this section out if you use another backend #
  ############################################################################
 -storagebackend: pgstorage
 -# storagebackend: mysqlstorage
 +#storagebackend: pgstorage
-+#storagebackend: mysqlstorage
++storagebackend: mysqlstorage
  
  # Quota Storage Server hostname (and optional port)
  # e.g. db.example.com:5432 (for PostgreSQL) or db.example.com:3306 (for MySQL)
- # NB : leave the directive empty to use unix sockets (same host only)
--storageserver: localhost
-+#storageserver: localhost
- 
- #
- # name of the Quota Storage Database
--storagename: pykota
-+#storagename: pykota
- 
- # 
- # Quota Storage normal user's name and password
-@@ -87,9 +87,9 @@
- # DATABASE, OTHERWISE ANY USER WHO COULD READ THIS CONFIGURATION
- # FILE COULD CHANGE HIS PRINT QUOTA.
- #
--storageuser : pykotauser
-+#storageuser : pykotauser
- # In the line below change the password's value if needed.
--storageuserpw : readonlypw
-+#storageuserpw : readonlypw
- 
- ############################################################################
- 
-diff -ur pykota-1.26/conf/pykotadmin.conf.sample pykota-1.26-conf/conf/pykotadmin.conf.sample
---- pykota-1.26/conf/pykotadmin.conf.sample	2007-12-06 19:51:31.000000000 +0100
-+++ pykota-1.26-conf/conf/pykotadmin.conf.sample	2007-12-09 01:10:11.000000000 +0100
-@@ -63,9 +63,9 @@
- 
- # PostgreSQL's or MySQL's Quota Storage administrator's name and password
- # Please comment these lines out and see further below if you use LDAP.
--storageadmin : pykotaadmin
-+#storageadmin : pykotaadmin
- # In the line below change the password's value if needed.
--storageadminpw : readwritepw
-+#storageadminpw : readwritepw
- 
- # storagebackend: ldapstorage
- # storageserver: ldap://ldapmaster.example.com:389
