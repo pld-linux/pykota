@@ -1,8 +1,14 @@
+#
+# NOTE:
+#	- only apache is supprted (feel free to add support for other httpds)
+#	- CGI scripts must be run with uid/gid pykota/pykota privs
+#	- that's why they're placed in /home/services/httpd/cgi-bin (suexec req)
+#
 Name:		pykota
 Summary:	Print Quota and Accounting Software Solution
 Summary(pl.UTF-8):	Narzędzie do limitowania i rozliczania wydruków
 Version:	1.26
-Release:	0.5
+Release:	1
 License:	GPLv2
 Group:		Applications/Printing
 # NOTE: from svn:
@@ -223,12 +229,6 @@ fi
 
 %triggerun cgi -- apache < 2.2.0, apache-base
 %webapp_unregister httpd %{_webapp}
-
-%triggerin cgi -- lighttpd
-%webapp_register lighttpd %{_webapp}
-
-%triggerun cgi -- lighttpd
-%webapp_unregister lighttpd %{_webapp}
 
 %post -n openldap-schema-pykota
 # dependant schemas: cosine(uid) inetorgperson(displayName) nis(gidNumber)
