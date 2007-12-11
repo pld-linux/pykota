@@ -22,6 +22,7 @@ URL:		http://www.pykota.com/
 BuildRequires:	docbook-utils
 BuildRequires:	docbook-dtd41-sgml
 BuildRequires:	sqlite3
+BuildRequires:	tetex-fonts-pazo
 Requires:	cups >= 1:1.2.0
 Requires:	ghostscript
 Requires:	python-chardet
