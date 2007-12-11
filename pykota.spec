@@ -4,6 +4,9 @@
 #	- CGI scripts must be run with uid/gid pykota/pykota privs
 #	- that's why they're placed in /home/services/httpd/cgi-bin (suexec req)
 #
+# Conditional build:
+%bcond_without	doc	# don't build HTML/PDF documentation
+
 Name:		pykota
 Summary:	Print Quota and Accounting Software Solution
 Summary(pl.UTF-8):	Narzędzie do limitowania i rozliczania wydruków
@@ -19,14 +22,16 @@ Source1:	%{name}-httpd.conf
 Patch0:		%{name}-conf.patch
 Patch1:		%{name}-css.patch
 URL:		http://www.pykota.com/
+%if %{with doc}
 BuildRequires:	docbook-utils
 BuildRequires:	docbook-dtd41-sgml
-BuildRequires:	sqlite3
 BuildRequires:	tetex-fonts-pazo
 BuildRequires:	tetex-fonts-type1-urw
 BuildRequires:	tetex-fonts-jknappen
 BuildRequires:	tetex-fonts-stmaryrd
 BuildRequires:	tetex-latex-cyrillic
+%endif
+BuildRequires:	sqlite3
 Requires:	cups >= 1:1.2.0
 Requires:	ghostscript
 Requires:	python-chardet
@@ -174,10 +179,12 @@ find -name .svn | xargs rm -rf
 %build
 python setup.py build
 
+%if %{with doc}
 cd docs
 mkdir html
 docbook2html -o html pykota.sgml
 docbook2pdf pykota.sgml
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -249,7 +256,8 @@ fi
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc CREDITS FAQ LICENSE README SECURITY TODO
-%doc openoffice qa-assistant docs/*.sxi docs/*.pdf docs/html 
+%doc openoffice qa-assistant docs/*.sxi
+%{?with_doc:%doc docs/*.pdf docs/html}
 %attr(750,lp,pykota) %dir %{_sysconfdir}/%{name}
 %attr(640,lp,pykota) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/pykota.conf
 %attr(640,lp,pykota) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/pykotadmin.conf
