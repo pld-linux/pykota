@@ -24,7 +24,9 @@ BuildRequires:	docbook-dtd41-sgml
 BuildRequires:	sqlite3
 BuildRequires:	tetex-fonts-pazo
 BuildRequires:	tetex-fonts-type1-urw
-BuildRequires:	tetex-format-pdflatex
+BuildRequires:	tetex-fonts-jknappen
+BuildRequires:	tetex-fonts-stmaryrd
+BuildRequires:	tetex-latex-cyrillic
 Requires:	cups >= 1:1.2.0
 Requires:	ghostscript
 Requires:	python-chardet
