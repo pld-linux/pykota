@@ -11,7 +11,7 @@ Name:		pykota
 Summary:	Print Quota and Accounting Software Solution
 Summary(pl.UTF-8):	Narzędzie do limitowania i rozliczania wydruków
 Version:	1.26
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		Applications/Printing
 # NOTE: from svn:
