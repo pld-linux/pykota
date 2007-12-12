@@ -1,18 +1,18 @@
 #
 # NOTE:
-#	- only apache is supprted (feel free to add support for other httpds)
+#	- only apache is supported (feel free to add support for other httpds)
 #	- CGI scripts must be run with uid/gid pykota/pykota privs
 #	- that's why they're placed in /home/services/httpd/cgi-bin (suexec req)
 #
 # Conditional build:
 %bcond_without	doc	# don't build HTML/PDF documentation
-
-Name:		pykota
+#
 Summary:	Print Quota and Accounting Software Solution
 Summary(pl.UTF-8):	Narzędzie do limitowania i rozliczania wydruków
+Name:		pykota
 Version:	1.26
 Release:	2
-License:	GPLv2
+License:	GPL v2
 Group:		Applications/Printing
 # NOTE: from svn:
 # svn co svn://svn.librelogiciel.com/pykota/tags/1.26/
@@ -32,23 +32,23 @@ BuildRequires:	tetex-fonts-stmaryrd
 BuildRequires:	tetex-latex-cyrillic
 %endif
 BuildRequires:	sqlite3
+Requires:	%{name}-common = %{version}-%{release}
+Requires:	%{name}-storage = %{version}-%{release}
 Requires:	cups >= 1:1.2.0
 Requires:	ghostscript
+Requires:	python-PIL
+Requires:	python-PyPAM
+Requires:	python-ReportLab
 Requires:	python-chardet
-Requires:	python-pkipplib
 Requires:	python-jaxml
 Requires:	python-mx-DateTime >= 2.0.3
-Requires:	python-PIL
+Requires:	python-pkipplib
 Requires:	python-pkpgcounter
 %ifarch %{ix86}
 Requires:	python-psyco
 %endif
 Requires:	python-pyosd
-Requires:	python-PyPAM
 Requires:	python-pysnmp >= 3.4.2
-Requires:	python-ReportLab
-Requires:	%{name}-common = %{version}-%{release}
-Requires:	%{name}-storage = %{version}-%{release}
 Suggests:	net-snmp-utils >= 4.2.5
 Suggests:	netatalk
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -82,9 +82,9 @@ Wspólne pliki dla pytkoty.
 Summary:	CGI interface for pykota
 Summary(pl.UTF-8):	Interfejs CGI dla pytkoty
 Group:		Applications/Printing
+Requires:	%{name} = %{version}-%{release}
 Requires:	webapps
 Requires:	webserver
-Requires:	%{name} = %{version}-%{release}
 
 %description cgi
 CGI interface for pykota.
@@ -96,9 +96,9 @@ Interfejs CGI dla pykoty.
 Summary:	LDAP storage backend for pykota
 Summary(pl.UTF-8):	Backend przechowywania danych w LDAP dla pykoty
 Group:		Applications/Printing
-Requires:	python-ldap
 Requires:	%{name}-common = %{version}-%{release}
-Provides:	%{name}-storage
+Requires:	python-ldap
+Provides:	%{name}-storage = %{version}-%{release}
 
 %description storage-ldap
 LDAP storage backend for pykota.
@@ -110,9 +110,9 @@ Backend przechowywania danych w LDAP dla pykoty.
 Summary:	MySQL storage backend for pykota
 Summary(pl.UTF-8):	Backend przechowywania danych w MySQL dla pykoty
 Group:		Applications/Printing
-Requires:	python-MySQLdb >= 1.2
 Requires:	%{name}-common = %{version}-%{release}
-Provides:	%{name}-storage
+Requires:	python-MySQLdb >= 1.2
+Provides:	%{name}-storage = %{version}-%{release}
 
 %description storage-mysql
 MySQL storage backend for pykota.
@@ -124,9 +124,9 @@ Backend przechowywania danych w MySQL dla pykoty.
 Summary:	PostgreSQL storage backend for pykota
 Summary(pl.UTF-8):	Backend przechowywania danych w PostgreSQL dla pykoty
 Group:		Applications/Printing
-Requires:	python-PyGreSQL
 Requires:	%{name}-common = %{version}-%{release}
-Provides:	%{name}-storage
+Requires:	python-PyGreSQL
+Provides:	%{name}-storage = %{version}-%{release}
 
 %description storage-postgres
 PostgreSQL storage backend for pykota.
@@ -138,9 +138,9 @@ Backend przechowywania danych w PostgreSQL dla pykoty.
 Summary:	SQLite storage backend for pykota
 Summary(pl.UTF-8):	Backend przechowywania danych w SQLite dla pykoty
 Group:		Applications/Printing
-Requires:	python-sqlite >= 2.0.5
 Requires:	%{name}-common = %{version}-%{release}
-Provides:	%{name}-storage
+Requires:	python-sqlite >= 2.0.5
+Provides:	%{name}-storage = %{version}-%{release}
 
 %description storage-sqlite
 SQLite storage backend for pykota.
@@ -306,7 +306,7 @@ fi
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_webapps}/%{_webapp}/apache.conf
 %attr(755,pykota,pykota) %dir %{httpdir}/cgi-bin/%{name}
 %attr(755,pykota,pykota) %{httpdir}/cgi-bin/%{name}/*.cgi
-%attr(644,root,root) %{httpdir}/cgi-bin/%{name}/*.css
+%{httpdir}/cgi-bin/%{name}/*.css
 
 %files common
 %defattr(644,root,root,755)
