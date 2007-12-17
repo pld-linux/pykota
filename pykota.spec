@@ -85,6 +85,8 @@ Group:		Applications/Printing
 Requires:	%{name} = %{version}-%{release}
 Requires:	webapps
 Requires:	webserver
+Requires:	webserver(cgi)
+Requires:	webserver(access)
 
 %description cgi
 CGI interface for pykota.
