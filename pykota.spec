@@ -11,7 +11,7 @@ Summary:	Print Quota and Accounting Software Solution
 Summary(pl.UTF-8):	Narzędzie do limitowania i rozliczania wydruków
 Name:		pykota
 Version:	1.26
-Release:	2
+Release:	3
 License:	GPL v2
 Group:		Applications/Printing
 # NOTE: from svn:
@@ -23,12 +23,12 @@ Patch0:		%{name}-conf.patch
 Patch1:		%{name}-css.patch
 URL:		http://www.pykota.com/
 %if %{with doc}
-BuildRequires:	docbook-utils
 BuildRequires:	docbook-dtd41-sgml
-BuildRequires:	tetex-fonts-pazo
-BuildRequires:	tetex-fonts-type1-urw
+BuildRequires:	docbook-utils
 BuildRequires:	tetex-fonts-jknappen
+BuildRequires:	tetex-fonts-pazo
 BuildRequires:	tetex-fonts-stmaryrd
+BuildRequires:	tetex-fonts-type1-urw
 BuildRequires:	tetex-latex-cyrillic
 %endif
 BuildRequires:	sqlite3
@@ -85,8 +85,8 @@ Group:		Applications/Printing
 Requires:	%{name} = %{version}-%{release}
 Requires:	webapps
 Requires:	webserver
-Requires:	webserver(cgi)
 Requires:	webserver(access)
+Requires:	webserver(cgi)
 
 %description cgi
 CGI interface for pykota.
@@ -168,13 +168,13 @@ Ten pakiet zawiera schemat pykoty dla openldapa.
 %patch0 -p1
 %patch1 -p1
 
-mv -f po/{el_GR,el}
-mv -f po/{nb_NO,nb}
-mv -f po/{sv_SE,sv}
+mv po/{el_GR,el}
+mv po/{nb_NO,nb}
+mv po/{sv_SE,sv}
 
-mv -f man/{el_GR,el}
-mv -f man/{nb_NO,nb}
-mv -f man/{sv_SE,sv}
+mv man/{el_GR,el}
+mv man/{nb_NO,nb}
+mv man/{sv_SE,sv}
 
 find -name .svn | xargs rm -rf
 
@@ -303,7 +303,7 @@ fi
 %files cgi
 %defattr(644,root,root,755)
 %doc cgi-bin/README
-%attr(755,root,root) %dir %{_webapps}/%{_webapp}
+%dir %{_webapps}/%{_webapp}
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_webapps}/%{_webapp}/httpd.conf
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_webapps}/%{_webapp}/apache.conf
 %attr(755,pykota,pykota) %dir %{httpdir}/cgi-bin/%{name}
