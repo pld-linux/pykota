@@ -26,10 +26,12 @@ URL:		http://www.pykota.com/
 BuildRequires:	docbook-dtd41-sgml
 BuildRequires:	docbook-utils
 BuildRequires:	texlive-fonts-jknappen
+BuildRequires:	texlive-fonts-marvosym
 BuildRequires:	texlive-fonts-other
 BuildRequires:	texlive-fonts-stmaryrd
 BuildRequires:	texlive-fonts-type1-urw
 BuildRequires:	texlive-latex-cyrillic
+BuildRequires:	texlive-latex-marvosym
 %endif
 BuildRequires:	sqlite3
 Requires:	%{name}-common = %{version}-%{release}
