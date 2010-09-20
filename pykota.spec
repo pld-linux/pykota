@@ -11,7 +11,7 @@ Summary:	Print Quota and Accounting Software Solution
 Summary(pl.UTF-8):	Narzędzie do limitowania i rozliczania wydruków
 Name:		pykota
 Version:	1.26
-Release:	6
+Release:	7
 License:	GPL v2
 Group:		Applications/Printing
 # NOTE: from svn:
@@ -25,11 +25,11 @@ URL:		http://www.pykota.com/
 %if %{with doc}
 BuildRequires:	docbook-dtd41-sgml
 BuildRequires:	docbook-utils
-BuildRequires:	tetex-fonts-jknappen
-BuildRequires:	tetex-fonts-pazo
-BuildRequires:	tetex-fonts-stmaryrd
-BuildRequires:	tetex-fonts-type1-urw
-BuildRequires:	tetex-latex-cyrillic
+BuildRequires:	texlive-fonts-jknappen
+BuildRequires:	texlive-fonts-other
+BuildRequires:	texlive-fonts-stmaryrd
+BuildRequires:	texlive-fonts-type1-urw
+BuildRequires:	texlive-latex-cyrillic
 %endif
 BuildRequires:	sqlite3
 Requires:	%{name}-common = %{version}-%{release}
