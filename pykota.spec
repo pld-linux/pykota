@@ -11,7 +11,7 @@ Summary:	Print Quota and Accounting Software Solution
 Summary(pl.UTF-8):	Narzędzie do limitowania i rozliczania wydruków
 Name:		pykota
 Version:	1.26
-Release:	9
+Release:	10
 License:	GPL v2
 Group:		Applications/Printing
 # NOTE: from svn:
@@ -334,7 +334,7 @@ fi
 %defattr(644,root,root,755)
 %doc initscripts/sqlite/*
 %{py_sitescriptdir}/%{name}/storages/sqlite*.py*
-%attr(750,lp,pykota) /var/lib/%{name}
+%attr(750,lp,pykota) %dir /var/lib/%{name}
 %attr(660,lp,pykota) %config(noreplace) %verify(not md5 mtime size) /var/lib/%{name}/pykota.db
 
 %files -n openldap-schema-pykota
