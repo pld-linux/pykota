@@ -11,14 +11,15 @@ Summary:	Print Quota and Accounting Software Solution
 Summary(pl.UTF-8):	Narzędzie do limitowania i rozliczania wydruków
 Name:		pykota
 Version:	1.26
-Release:	8
+Release:	9
 License:	GPL v2
 Group:		Applications/Printing
 # NOTE: from svn:
 # svn co svn://svn.librelogiciel.com/pykota/tags/1.26/
 Source0:	%{name}-%{version}.tar.bz2
 # Source0-md5:	6e4b3232420592695388cbb27511e668
-Source1:	%{name}-httpd.conf
+Source1:	%{name}-apache.conf
+Source2:	%{name}-httpd.conf
 Patch0:		%{name}-conf.patch
 Patch1:		%{name}-css.patch
 URL:		http://www.pykota.com/
@@ -86,6 +87,7 @@ Requires:	webapps
 Requires:	webserver
 Requires:	webserver(access)
 Requires:	webserver(cgi)
+Conflicts:	apache-base < 2.4.0-1
 
 %description cgi
 CGI interface for pykota.
@@ -207,8 +209,8 @@ install initscripts/ldap/pykota.schema $RPM_BUILD_ROOT%{schemadir}
 install conf/pykota.conf.sample $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/pykota.conf
 install conf/pykotadmin.conf.sample $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/pykotadmin.conf
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_webapps}/%{_webapp}/httpd.conf
 install %{SOURCE1} $RPM_BUILD_ROOT%{_webapps}/%{_webapp}/apache.conf
+install %{SOURCE2} $RPM_BUILD_ROOT%{_webapps}/%{_webapp}/httpd.conf
 
 ln -s %{_datadir}/%{name}/cupspykota $RPM_BUILD_ROOT%{cups_serverbin}/backend/cupspykota
 
@@ -237,10 +239,10 @@ fi
 %triggerun cgi -- apache1 < 1.3.37-3, apache1-base
 %webapp_unregister apache %{_webapp}
 
-%triggerin cgi -- apache < 2.2.0, apache-base
+%triggerin cgi -- apache-base
 %webapp_register httpd %{_webapp}
 
-%triggerun cgi -- apache < 2.2.0, apache-base
+%triggerun cgi -- apache-base
 %webapp_unregister httpd %{_webapp}
 
 %post -n openldap-schema-pykota
