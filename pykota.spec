@@ -1,4 +1,3 @@
-#
 # NOTE:
 #	- only apache is supported (feel free to add support for other httpds)
 #	- CGI scripts must be run with uid/gid pykota/pykota privs
@@ -6,12 +5,12 @@
 #
 # Conditional build:
 %bcond_without	doc	# don't build HTML/PDF documentation
-#
+
 Summary:	Print Quota and Accounting Software Solution
 Summary(pl.UTF-8):	Narzędzie do limitowania i rozliczania wydruków
 Name:		pykota
 Version:	1.26
-Release:	10
+Release:	11
 License:	GPL v2
 Group:		Applications/Printing
 # NOTE: from svn:
@@ -204,16 +203,16 @@ python setup.py install \
 	--root=$RPM_BUILD_ROOT \
 	--optimize=2
 
-install cgi-bin/*.cgi $RPM_BUILD_ROOT%{httpdir}/cgi-bin/%{name}
-install stylesheets/pykota.css $RPM_BUILD_ROOT%{httpdir}/cgi-bin/%{name}
+install -p cgi-bin/*.cgi $RPM_BUILD_ROOT%{httpdir}/cgi-bin/%{name}
+install -p stylesheets/pykota.css $RPM_BUILD_ROOT%{httpdir}/cgi-bin/%{name}
 
-install initscripts/ldap/pykota.schema $RPM_BUILD_ROOT%{schemadir}
+cp -p initscripts/ldap/pykota.schema $RPM_BUILD_ROOT%{schemadir}
 
-install conf/pykota.conf.sample $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/pykota.conf
-install conf/pykotadmin.conf.sample $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/pykotadmin.conf
+cp -p conf/pykota.conf.sample $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/pykota.conf
+cp -p conf/pykotadmin.conf.sample $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/pykotadmin.conf
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_webapps}/%{_webapp}/apache.conf
-install %{SOURCE2} $RPM_BUILD_ROOT%{_webapps}/%{_webapp}/httpd.conf
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_webapps}/%{_webapp}/apache.conf
+cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_webapps}/%{_webapp}/httpd.conf
 
 ln -s %{_datadir}/%{name}/cupspykota $RPM_BUILD_ROOT%{cups_serverbin}/backend/cupspykota
 
