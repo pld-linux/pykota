@@ -10,7 +10,7 @@ Summary:	Print Quota and Accounting Software Solution
 Summary(pl.UTF-8):	Narzędzie do limitowania i rozliczania wydruków
 Name:		pykota
 Version:	1.26
-Release:	11
+Release:	12
 License:	GPL v2
 Group:		Applications/Printing
 # NOTE: from svn:
@@ -32,6 +32,7 @@ BuildRequires:	texlive-fonts-stmaryrd
 BuildRequires:	texlive-fonts-type1-urw
 BuildRequires:	texlive-latex-cyrillic
 BuildRequires:	texlive-latex-marvosym
+BuildRequires:	texlive-xmltex
 %endif
 BuildRequires:	sqlite3
 Requires:	%{name}-common = %{version}-%{release}
@@ -182,7 +183,7 @@ mv man/{sv_SE,sv}
 find -name .svn | xargs rm -rf
 
 %build
-python setup.py build
+%py_build
 
 %if %{with doc}
 cd docs
@@ -199,9 +200,7 @@ install -d $RPM_BUILD_ROOT{%{schemadir},%{_sysconfdir}/%{name}} \
 	$RPM_BUILD_ROOT%{httpdir}/cgi-bin/%{name} \
 	$RPM_BUILD_ROOT%{_webapps}/%{_webapp}
 
-python setup.py install \
-	--root=$RPM_BUILD_ROOT \
-	--optimize=2
+%py_install
 
 install -p cgi-bin/*.cgi $RPM_BUILD_ROOT%{httpdir}/cgi-bin/%{name}
 install -p stylesheets/pykota.css $RPM_BUILD_ROOT%{httpdir}/cgi-bin/%{name}
