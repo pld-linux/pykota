@@ -157,9 +157,7 @@ Summary(pl.UTF-8):	Schemat LDAP dla pykoty
 Group:		Networking/Daemons
 Requires(post,postun):	sed >= 4.0
 Requires:	openldap-servers
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description -n openldap-schema-pykota
 This package contains pykota.schema for openldap.
